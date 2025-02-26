@@ -1,0 +1,29 @@
+version: "3.9"
+   
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    # command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./:/app
+      - ./log:/app/log
+      - ./log:/var/log/nginx
+      - ./log:/var/log/uwsgi/app
+      - ./config/production/nginx.conf:/etc/nginx/sites-enabled/nginx.conf
+      - ./config/production/uwsgi.ini:/etc/uwsgi/apps-enabled/uwsgi.ini
+      - ./config/production/supervisor.conf:/etc/supervisor/conf.d/supervisor.conf
+    ports:
+      - "8000:8000"
+    restart: "always"
+    command: >
+      sh -c "
+        # python3 -m pip install -U -r requirements.txt
+        python3 manage.py migrate --settings=config.production.settings
+        # python3 manage.py collectstatic --no-input --settings=config.production.settings
+        # python3 manage.py uwsgi
+        # service supervisor start
+        # service nginx start
+        python3 manage.py runserver 0.0.0.0:8000 --settings=config.production.settings
+        tail -f /dev/null"
