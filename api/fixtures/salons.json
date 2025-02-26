@@ -1,0 +1,47 @@
+[
+  {
+    "model": "api.salon",
+    "pk": 1,
+    "fields": {
+      "name": "멍멍살롱",
+      "address": "서울시 강남구 역삼동 123-45",
+      "latitude": 37.4979,
+      "longitude": 127.0276,
+      "description": "전문 애견 미용실",
+      "phone": "02-1234-5678",
+      "operating_hours": "10:00-20:00",
+      "created_at": "2024-02-24T00:00:00Z",
+      "updated_at": "2024-02-24T00:00:00Z"
+    }
+  },
+  {
+    "model": "api.salon",
+    "pk": 2,
+    "fields": {
+      "name": "댕댕뷰티",
+      "address": "서울시 강남구 삼성동 234-56",
+      "latitude": 37.5140,
+      "longitude": 127.0478,
+      "description": "프리미엄 펫 살롱",
+      "phone": "02-2345-6789",
+      "operating_hours": "09:00-19:00",
+      "created_at": "2024-02-24T00:00:00Z",
+      "updated_at": "2024-02-24T00:00:00Z"
+    }
+  },
+  {
+    "model": "api.salon",
+    "pk": 3,
+    "fields": {
+      "name": "럭셔리펫",
+      "address": "서울시 서초구 서초동 345-67",
+      "latitude": 37.4923,
+      "longitude": 127.0292,
+      "description": "반려동물 토탈 케어",
+      "phone": "02-3456-7890",
+      "operating_hours": "11:00-21:00",
+      "created_at": "2024-02-24T00:00:00Z",
+      "updated_at": "2024-02-24T00:00:00Z"
+    }
+  }
+]

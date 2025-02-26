@@ -1,0 +1,42 @@
+[
+  {
+    "model": "api.specialty",
+    "pk": 1,
+    "fields": {
+      "name": "일반진료",
+      "description": "기본적인 건강검진 및 치료",
+      "created_at": "2025-02-21T05:10:53Z",
+      "updated_at": "2025-02-21T05:10:53Z"
+    }
+  },
+  {
+    "model": "api.specialty",
+    "pk": 2,
+    "fields": {
+      "name": "외과수술",
+      "description": "각종 수술 및 정형외과 치료",
+      "created_at": "2025-02-21T05:10:53Z",
+      "updated_at": "2025-02-21T05:10:53Z"
+    }
+  },
+  {
+    "model": "api.specialty",
+    "pk": 3,
+    "fields": {
+      "name": "응급진료",
+      "description": "24시간 응급 진료 서비스",
+      "created_at": "2025-02-21T05:10:53Z",
+      "updated_at": "2025-02-21T05:10:53Z"
+    }
+  },
+  {
+    "model": "api.specialty",
+    "pk": 4,
+    "fields": {
+      "name": "한방치료",
+      "description": "침술 및 한방 치료",
+      "created_at": "2025-02-21T05:10:53Z",
+      "updated_at": "2025-02-21T05:10:53Z"
+    }
+  }
+]

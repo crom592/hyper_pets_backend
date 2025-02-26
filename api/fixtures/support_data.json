@@ -1,0 +1,62 @@
+[
+  {
+    "model": "api.support",
+    "pk": 1,
+    "fields": {
+      "title": "반려동물 입양 지원금",
+      "description": "유기동물 입양 시 동물병원 진료비, 예방접종비, 미용비 등을 지원합니다.",
+      "requirements": "- 유기동물 입양 확인서\n- 주민등록등본\n- 신분증 사본",
+      "deadline": "2025-12-31",
+      "created_at": "2025-02-23T12:00:00Z",
+      "updated_at": "2025-02-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "api.support",
+    "pk": 2,
+    "fields": {
+      "title": "반려동물 등록비 지원",
+      "description": "내장형 칩 등록 시 등록비용을 전액 지원합니다.",
+      "requirements": "- 동물등록 신청서\n- 주민등록등본",
+      "deadline": "2025-06-30",
+      "created_at": "2025-02-23T12:00:00Z",
+      "updated_at": "2025-02-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "api.support",
+    "pk": 3,
+    "fields": {
+      "title": "반려동물 중성화 수술 지원",
+      "description": "저소득층 가정의 반려동물 중성화 수술비를 지원합니다.",
+      "requirements": "- 기초생활수급자 증명서 또는 차상위계층 증명서\n- 동물등록증",
+      "deadline": "2025-09-30",
+      "created_at": "2025-02-23T12:00:00Z",
+      "updated_at": "2025-02-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "api.support",
+    "pk": 4,
+    "fields": {
+      "title": "반려동물 행동교정 교육비 지원",
+      "description": "전문 훈련사의 행동교정 교육비를 50% 지원합니다.",
+      "requirements": "- 동물등록증\n- 행동교정 필요성 증명서(수의사 소견서)",
+      "deadline": "2025-08-31",
+      "created_at": "2025-02-23T12:00:00Z",
+      "updated_at": "2025-02-23T12:00:00Z"
+    }
+  },
+  {
+    "model": "api.support",
+    "pk": 5,
+    "fields": {
+      "title": "반려동물 의료비 긴급지원",
+      "description": "갑작스러운 수술이나 치료가 필요한 경우 의료비를 지원합니다.",
+      "requirements": "- 진단서\n- 치료비 영수증\n- 소득증빙서류",
+      "deadline": null,
+      "created_at": "2025-02-23T12:00:00Z",
+      "updated_at": "2025-02-23T12:00:00Z"
+    }
+  }
+]

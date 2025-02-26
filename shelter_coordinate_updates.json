@@ -1,0 +1,14 @@
+[
+  {
+    "name": "사랑이 넘치는 보호소",
+    "address": "서울특별시 송파구 올림픽로 321",
+    "old_coordinates": {
+      "latitude": 37.514,
+      "longitude": 127.1058
+    },
+    "new_coordinates": {
+      "latitude": 37.5156512,
+      "longitude": 127.1054647
+    }
+  }
+]
