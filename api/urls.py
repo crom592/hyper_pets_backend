@@ -18,5 +18,7 @@ router.register(r'support', SupportViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('shelters/nearby/', ShelterViewSet.as_view({'get': 'nearby'}), name='shelter-nearby'),
+    path('hospitals/nearby/', HospitalViewSet.as_view({'get': 'nearby'}), name='hospital-nearby'),
     path('salons/nearby/', SalonViewSet.as_view({'get': 'nearby'}), name='salon-nearby'),
 ]
