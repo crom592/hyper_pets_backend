@@ -15,7 +15,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
 
 class ShelterViewSet(viewsets.ModelViewSet):
-    queryset = Shelter.objects.all()
+    queryset = Shelter.objects.all().order_by('name')
     serializer_class = ShelterSerializer
 
     @action(detail=False, methods=['GET'])
@@ -49,7 +49,7 @@ class ShelterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 class HospitalViewSet(viewsets.ModelViewSet):
-    queryset = Hospital.objects.all()
+    queryset = Hospital.objects.all().order_by('name')
     serializer_class = HospitalSerializer
 
     @action(detail=False, methods=['GET'])
@@ -137,7 +137,7 @@ class SupportViewSet(viewsets.ModelViewSet):
 
 
 class SalonViewSet(viewsets.ModelViewSet):
-    queryset = Salon.objects.all()
+    queryset = Salon.objects.all().order_by('name')
     serializer_class = SalonSerializer
 
     @action(detail=False, methods=['GET'])

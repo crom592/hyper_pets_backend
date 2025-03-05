@@ -41,6 +41,9 @@ class Shelter(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['name']
+
     def __str__(self):
         return self.name
 
@@ -56,6 +59,9 @@ class Hospital(models.Model):
     specialties = models.ManyToManyField(Specialty, related_name='hospitals', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __str__(self):
         return self.name
@@ -74,6 +80,7 @@ class Salon(models.Model):
 
     class Meta:
         db_table = 'salons'
+        ordering = ['name']
 
     def __str__(self):
         return self.name
