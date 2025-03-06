@@ -14,7 +14,7 @@ router.register(r'salons', SalonViewSet)
 router.register(r'pets', PetViewSet)
 router.register(r'adoption-stories', AdoptionStoryViewSet)
 router.register(r'events', EventViewSet)
-router.register(r'support', SupportViewSet)
+router.register(r'supports', SupportViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

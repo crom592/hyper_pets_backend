@@ -20,21 +20,41 @@ class ShelterViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def nearby(self, request):
-        lat = float(request.query_params.get('lat', 0))
-        lng = float(request.query_params.get('lng', 0))
-        radius = float(request.query_params.get('radius', 5))  # km
-        
-        # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
-        lat_km = 111.0
-        lng_km = lat_km * abs(math.cos(math.radians(lat)))
-        
-        lat_range = radius / lat_km
-        lng_range = radius / lng_km
-        
-        queryset = self.get_queryset().filter(
-            latitude__range=(lat - lat_range, lat + lat_range),
-            longitude__range=(lng - lng_range, lng + lng_range)
-        )
+        # Check if bounding box parameters are provided
+        if all(param in request.query_params for param in ['startX', 'startY', 'endX', 'endY']):
+            # Bounding box approach (similar to Hogangnono)
+            start_x = float(request.query_params.get('startX'))
+            start_y = float(request.query_params.get('startY'))
+            end_x = float(request.query_params.get('endX'))
+            end_y = float(request.query_params.get('endY'))
+            
+            # Get locations within the bounding box
+            queryset = self.get_queryset().filter(
+                latitude__range=(min(start_y, end_y), max(start_y, end_y)),
+                longitude__range=(min(start_x, end_x), max(start_x, end_x))
+            )
+            
+            # Get center point for distance calculation
+            lat = float(request.query_params.get('lat', (start_y + end_y) / 2))
+            lng = float(request.query_params.get('lng', (start_x + end_x) / 2))
+            
+        else:
+            # Fallback to radius-based search
+            lat = float(request.query_params.get('lat', 0))
+            lng = float(request.query_params.get('lng', 0))
+            radius = float(request.query_params.get('radius', 5000)) / 1000  # Convert meters to km
+            
+            # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
+            lat_km = 111.0
+            lng_km = lat_km * abs(math.cos(math.radians(lat)))
+            
+            lat_range = radius / lat_km
+            lng_range = radius / lng_km
+            
+            queryset = self.get_queryset().filter(
+                latitude__range=(lat - lat_range, lat + lat_range),
+                longitude__range=(lng - lng_range, lng + lng_range)
+            )
         
         # 실제 거리 계산 및 정렬
         queryset = sorted(
@@ -43,7 +63,7 @@ class ShelterViewSet(viewsets.ModelViewSet):
                 (x.latitude - lat) ** 2 + 
                 (x.longitude - lng) ** 2
             ) ** 0.5
-        )[:20]  # 가까운 20개만 반환
+        )[:30]  # 가까운 30개만 반환 (증가)
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -54,21 +74,41 @@ class HospitalViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def nearby(self, request):
-        lat = float(request.query_params.get('lat', 0))
-        lng = float(request.query_params.get('lng', 0))
-        radius = float(request.query_params.get('radius', 5))  # km
-        
-        # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
-        lat_km = 111.0
-        lng_km = lat_km * abs(math.cos(math.radians(lat)))
-        
-        lat_range = radius / lat_km
-        lng_range = radius / lng_km
-        
-        queryset = self.get_queryset().filter(
-            latitude__range=(lat - lat_range, lat + lat_range),
-            longitude__range=(lng - lng_range, lng + lng_range)
-        )
+        # Check if bounding box parameters are provided
+        if all(param in request.query_params for param in ['startX', 'startY', 'endX', 'endY']):
+            # Bounding box approach (similar to Hogangnono)
+            start_x = float(request.query_params.get('startX'))
+            start_y = float(request.query_params.get('startY'))
+            end_x = float(request.query_params.get('endX'))
+            end_y = float(request.query_params.get('endY'))
+            
+            # Get locations within the bounding box
+            queryset = self.get_queryset().filter(
+                latitude__range=(min(start_y, end_y), max(start_y, end_y)),
+                longitude__range=(min(start_x, end_x), max(start_x, end_x))
+            )
+            
+            # Get center point for distance calculation
+            lat = float(request.query_params.get('lat', (start_y + end_y) / 2))
+            lng = float(request.query_params.get('lng', (start_x + end_x) / 2))
+            
+        else:
+            # Fallback to radius-based search
+            lat = float(request.query_params.get('lat', 0))
+            lng = float(request.query_params.get('lng', 0))
+            radius = float(request.query_params.get('radius', 5000)) / 1000  # Convert meters to km
+            
+            # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
+            lat_km = 111.0
+            lng_km = lat_km * abs(math.cos(math.radians(lat)))
+            
+            lat_range = radius / lat_km
+            lng_range = radius / lng_km
+            
+            queryset = self.get_queryset().filter(
+                latitude__range=(lat - lat_range, lat + lat_range),
+                longitude__range=(lng - lng_range, lng + lng_range)
+            )
         
         # 실제 거리 계산 및 정렬
         queryset = sorted(
@@ -77,7 +117,7 @@ class HospitalViewSet(viewsets.ModelViewSet):
                 (x.latitude - lat) ** 2 + 
                 (x.longitude - lng) ** 2
             ) ** 0.5
-        )[:20]  # 가까운 20개만 반환
+        )[:30]  # 가까운 30개만 반환 (증가)
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -142,21 +182,41 @@ class SalonViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def nearby(self, request):
-        lat = float(request.query_params.get('lat', 0))
-        lng = float(request.query_params.get('lng', 0))
-        radius = float(request.query_params.get('radius', 5))  # km
-        
-        # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
-        lat_km = 111.0
-        lng_km = lat_km * abs(math.cos(math.radians(lat)))
-        
-        lat_range = radius / lat_km
-        lng_range = radius / lng_km
-        
-        queryset = self.get_queryset().filter(
-            latitude__range=(lat - lat_range, lat + lat_range),
-            longitude__range=(lng - lng_range, lng + lng_range)
-        )
+        # Check if bounding box parameters are provided
+        if all(param in request.query_params for param in ['startX', 'startY', 'endX', 'endY']):
+            # Bounding box approach (similar to Hogangnono)
+            start_x = float(request.query_params.get('startX'))
+            start_y = float(request.query_params.get('startY'))
+            end_x = float(request.query_params.get('endX'))
+            end_y = float(request.query_params.get('endY'))
+            
+            # Get locations within the bounding box
+            queryset = self.get_queryset().filter(
+                latitude__range=(min(start_y, end_y), max(start_y, end_y)),
+                longitude__range=(min(start_x, end_x), max(start_x, end_x))
+            )
+            
+            # Get center point for distance calculation
+            lat = float(request.query_params.get('lat', (start_y + end_y) / 2))
+            lng = float(request.query_params.get('lng', (start_x + end_x) / 2))
+            
+        else:
+            # Fallback to radius-based search
+            lat = float(request.query_params.get('lat', 0))
+            lng = float(request.query_params.get('lng', 0))
+            radius = float(request.query_params.get('radius', 5000)) / 1000  # Convert meters to km
+            
+            # 위도 1도 = 약 111km, 경도 1도는 위도에 따라 달라짐
+            lat_km = 111.0
+            lng_km = lat_km * abs(math.cos(math.radians(lat)))
+            
+            lat_range = radius / lat_km
+            lng_range = radius / lng_km
+            
+            queryset = self.get_queryset().filter(
+                latitude__range=(lat - lat_range, lat + lat_range),
+                longitude__range=(lng - lng_range, lng + lng_range)
+            )
         
         # 실제 거리 계산 및 정렬
         queryset = sorted(
@@ -165,7 +225,7 @@ class SalonViewSet(viewsets.ModelViewSet):
                 (x.latitude - lat) ** 2 + 
                 (x.longitude - lng) ** 2
             ) ** 0.5
-        )[:20]  # 가까운 20개만 반환
+        )[:30]  # 가까운 30개만 반환 (증가)
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
