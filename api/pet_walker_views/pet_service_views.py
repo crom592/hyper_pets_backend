@@ -73,7 +73,7 @@ class PetSitterServiceViewSet(viewsets.ModelViewSet):
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['service_type', 'is_active']
+    filterset_fields = ['service_type', 'is_available']
     search_fields = ['description']
     ordering_fields = ['price']
     
@@ -97,14 +97,14 @@ class PetSitterServiceViewSet(viewsets.ModelViewSet):
         # 일반 사용자는 활성화된 서비스만 볼 수 있음
         if not user.is_authenticated:
             # 인증되지 않은 사용자는 활성화된 서비스와 승인된 펫시터의 서비스만 볼 수 있음
-            queryset = queryset.filter(is_active=True)
-            queryset = queryset.filter(pet_sitter__petsitterprofile__verification_status='approved')
+            queryset = queryset.filter(is_available=True)
+            queryset = queryset.filter(pet_sitter__pet_sitter_profile__verification_status='approved')
         elif not user.is_staff and getattr(user, 'user_type', '') != 'pet_sitter':
-            queryset = queryset.filter(is_active=True)
-            queryset = queryset.filter(pet_sitter__petsitterprofile__verification_status='approved')
+            queryset = queryset.filter(is_available=True)
+            queryset = queryset.filter(pet_sitter__pet_sitter_profile__verification_status='approved')
         
         # 자신의 서비스만 볼 수 있는 경우
-        if user.user_type == 'pet_sitter' and not self.request.query_params.get('all', False):
+        if user.is_authenticated and getattr(user, 'user_type', '') == 'pet_sitter' and not self.request.query_params.get('all', False):
             queryset = queryset.filter(pet_sitter=user)
         
         return queryset
