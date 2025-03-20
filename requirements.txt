@@ -16,7 +16,7 @@ Pillow==10.2.0  # 이미지 처리
 python-dotenv==1.0.1
 
 # Production
-uwsgi==2.0.23  # WSGI 서버
+# uwsgi==2.0.23  # WSGI 서버 - 설치 오류로 인해 비활성화
 gunicorn==21.2.0  # 대체 WSGI 서버 (필요시 사용)
 
 # Utilities
