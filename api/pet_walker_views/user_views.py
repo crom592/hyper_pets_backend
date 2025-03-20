@@ -113,12 +113,12 @@ class PetSitterProfileViewSet(viewsets.ModelViewSet):
         if pet_type_id:
             queryset = queryset.filter(available_pet_types__id=pet_type_id)
         
-        # 일반 사용자는 인증된 펫시터만 볼 수 있음
-        if not user.is_staff and user.user_type != 'pet_sitter':
+        # 인증되지 않은 사용자는 승인된 펫시터만 볼 수 있음
+        if not user.is_authenticated or (not user.is_staff and getattr(user, 'user_type', None) != 'pet_sitter'):
             queryset = queryset.filter(verification_status='approved')
         
-        # 자신의 프로필만 볼 수 있는 경우
-        if user.user_type == 'pet_sitter' and not self.request.query_params.get('all', False):
+        # 인증된 펫시터는 자신의 프로필도 볼 수 있음
+        elif user.is_authenticated and getattr(user, 'user_type', None) == 'pet_sitter' and not self.request.query_params.get('all', False):
             queryset = queryset.filter(user=user)
         
         return queryset
