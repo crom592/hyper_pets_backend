@@ -117,11 +117,19 @@ class PetSitterProfileSerializer(serializers.ModelSerializer):
     certification_images = CertificationImageSerializer(many=True, read_only=True)
     service_types = serializers.PrimaryKeyRelatedField(many=True, queryset=ServiceType.objects.all())
     available_pet_types = serializers.PrimaryKeyRelatedField(many=True, queryset=PetType.objects.all())
+    price = serializers.SerializerMethodField()
     
     class Meta:
         model = PetSitterProfile
         fields = '__all__'
         read_only_fields = ['verification_status', 'average_rating', 'total_reviews', 'response_rate', 'response_time']
+    
+    def get_price(self, obj):
+        # 펫시터의 서비스 중 가장 낮은 가격 반환
+        services = obj.user.services.filter(is_available=True)
+        if services.exists():
+            return services.order_by('price').first().price
+        return None
 
 
 class PetTypeSerializer(serializers.ModelSerializer):

@@ -112,6 +112,35 @@ class PetSitterProfileViewSet(viewsets.ModelViewSet):
         pet_type_id = self.request.query_params.get('pet_type', None)
         if pet_type_id:
             queryset = queryset.filter(available_pet_types__id=pet_type_id)
+            
+        # 가격 필터링 추가
+        min_price = self.request.query_params.get('min_price', None)
+        max_price = self.request.query_params.get('max_price', None)
+        
+        # 가격 필터링은 서비스 모델을 통해 필터링해야 함
+        if min_price or max_price:
+            # 먼저 필터링된 서비스를 가진 펫시터 ID 목록 가져오기
+            from ..models import PetSitterService
+            from django.db.models import Min
+            
+            # 각 펫시터별로 최저 가격 서비스를 찾아서 필터링
+            pet_sitter_min_prices = PetSitterService.objects.filter(
+                is_available=True
+            ).values('pet_sitter').annotate(
+                min_price=Min('price')
+            )
+            
+            # 가격 필터 적용
+            if min_price:
+                pet_sitter_min_prices = pet_sitter_min_prices.filter(min_price__gte=float(min_price))
+            if max_price:
+                pet_sitter_min_prices = pet_sitter_min_prices.filter(min_price__lte=float(max_price))
+                
+            # 필터링된 펫시터 ID 목록 가져오기
+            pet_sitter_user_ids = pet_sitter_min_prices.values_list('pet_sitter', flat=True)
+            
+            # PetSitterProfile의 user는 CustomUser를 참조하고 있으므로 동일한 ID로 필터링
+            queryset = queryset.filter(user_id__in=pet_sitter_user_ids)
         
         # 인증되지 않은 사용자는 승인된 펫시터만 볼 수 있음
         if not user.is_authenticated or (not user.is_staff and getattr(user, 'user_type', None) != 'pet_sitter'):
