@@ -95,7 +95,11 @@ class PetSitterServiceViewSet(viewsets.ModelViewSet):
             queryset = queryset.filter(price__lte=float(max_price))
         
         # 일반 사용자는 활성화된 서비스만 볼 수 있음
-        if not user.is_staff and user.user_type != 'pet_sitter':
+        if not user.is_authenticated:
+            # 인증되지 않은 사용자는 활성화된 서비스와 승인된 펫시터의 서비스만 볼 수 있음
+            queryset = queryset.filter(is_active=True)
+            queryset = queryset.filter(pet_sitter__petsitterprofile__verification_status='approved')
+        elif not user.is_staff and getattr(user, 'user_type', '') != 'pet_sitter':
             queryset = queryset.filter(is_active=True)
             queryset = queryset.filter(pet_sitter__petsitterprofile__verification_status='approved')
         
