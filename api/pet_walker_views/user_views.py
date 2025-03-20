@@ -84,11 +84,17 @@ class CertificationImageViewSet(viewsets.ModelViewSet):
 class PetSitterProfileViewSet(viewsets.ModelViewSet):
     queryset = PetSitterProfile.objects.all()
     serializer_class = PetSitterProfileSerializer
-    permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['verification_status', 'service_types', 'available_pet_types']
     search_fields = ['user__username', 'user__first_name', 'user__last_name', 'introduction']
     ordering_fields = ['average_rating', 'total_reviews', 'response_rate']
+    
+    def get_permissions(self):
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            permission_classes = [IsAuthenticated]
+        else:
+            permission_classes = [AllowAny]
+        return [permission() for permission in permission_classes]
     
     def get_queryset(self):
         user = self.request.user
