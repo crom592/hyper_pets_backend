@@ -1,14 +1,350 @@
 [
   {
-    "name": "사랑이 넘치는 보호소",
-    "address": "서울특별시 송파구 올림픽로 321",
+    "name": "웰케어 동물병원",
+    "address": "서울특별시 마포구 월드컵북로 27 (서교동, 이화빌딩) 서교동447-2",
     "old_coordinates": {
-      "latitude": 37.514,
-      "longitude": 127.1058
+      "latitude": 37.5568782,
+      "longitude": 126.9190798
     },
     "new_coordinates": {
-      "latitude": 37.5156512,
-      "longitude": 127.1054647
+      "latitude": 37.5568782,
+      "longitude": 126.9190798
+    }
+  },
+  {
+    "name": "디아크 동물종합병원",
+    "address": "서울특별시 동작구 장승배기로27길 18 (노량진동) 1층",
+    "old_coordinates": {
+      "latitude": 37.5116916,
+      "longitude": 126.9390539
+    },
+    "new_coordinates": {
+      "latitude": 37.5116916,
+      "longitude": 126.9390539
+    }
+  },
+  {
+    "name": "마포구청",
+    "address": "서울특별시 마포구 월드컵로 212 (성산동, 마포구청) 8층 경제진흥과",
+    "old_coordinates": {
+      "latitude": 37.5663245,
+      "longitude": 126.901491
+    },
+    "new_coordinates": {
+      "latitude": 37.5663245,
+      "longitude": 126.901491
+    }
+  },
+  {
+    "name": "성동구청",
+    "address": "서울특별시 성동구 고산자로 270 (행당동) 10층 여성가족과",
+    "old_coordinates": {
+      "latitude": 37.563456,
+      "longitude": 127.036821
+    },
+    "new_coordinates": {
+      "latitude": 37.563456,
+      "longitude": 127.036821
+    }
+  },
+  {
+    "name": "강동구청 반려동물팀 ",
+    "address": "서울특별시 강동구 성내로 25 (성내동, 강동구청) 강동구청 ",
+    "old_coordinates": {
+      "latitude": 37.530126,
+      "longitude": 127.1237708
+    },
+    "new_coordinates": {
+      "latitude": 37.530126,
+      "longitude": 127.1237708
+    }
+  },
+  {
+    "name": "내품애센터",
+    "address": "서울특별시 서대문구 모래내로 333 (홍은동) null",
+    "old_coordinates": {
+      "latitude": 37.5804117,
+      "longitude": 126.9338026
+    },
+    "new_coordinates": {
+      "latitude": 37.5804117,
+      "longitude": 126.9338026
+    }
+  },
+  {
+    "name": "동대문구청",
+    "address": "서울특별시 동대문구 천호대로 145 (용두동) null",
+    "old_coordinates": {
+      "latitude": 37.574524,
+      "longitude": 127.03965
+    },
+    "new_coordinates": {
+      "latitude": 37.574524,
+      "longitude": 127.03965
+    }
+  },
+  {
+    "name": "남산동물병원",
+    "address": "서울특별시 용산구 후암로 51 (후암동) 1층",
+    "old_coordinates": {
+      "latitude": 37.5504361,
+      "longitude": 126.9769998
+    },
+    "new_coordinates": {
+      "latitude": 37.5504361,
+      "longitude": 126.9769998
+    }
+  },
+  {
+    "name": "둔촌동물병원",
+    "address": "서울특별시 강동구 양재대로 1385 (성내동) 둔촌동물병원",
+    "old_coordinates": {
+      "latitude": 37.5299285,
+      "longitude": 127.1366212
+    },
+    "new_coordinates": {
+      "latitude": 37.5299285,
+      "longitude": 127.1366212
+    }
+  },
+  {
+    "name": "열린동물병원",
+    "address": "서울특별시 용산구 원효로2가 84-10",
+    "old_coordinates": {
+      "latitude": 37.5356287,
+      "longitude": 126.9617561
+    },
+    "new_coordinates": {
+      "latitude": 37.5356287,
+      "longitude": 126.9617561
+    }
+  },
+  {
+    "name": "하니동물병원",
+    "address": "서울특별시 양천구 등촌로 58 (목동) 하니동물병원",
+    "old_coordinates": {
+      "latitude": 37.5351322,
+      "longitude": 126.8637695
+    },
+    "new_coordinates": {
+      "latitude": 37.5351322,
+      "longitude": 126.8637695
+    }
+  },
+  {
+    "name": "홍익동물병원",
+    "address": "서울특별시 마포구 독막로 45 (합정동) null",
+    "old_coordinates": {
+      "latitude": 37.5480982,
+      "longitude": 126.9183864
+    },
+    "new_coordinates": {
+      "latitude": 37.5480982,
+      "longitude": 126.9183864
+    }
+  },
+  {
+    "name": "강현림동물병원",
+    "address": "서울특별시 양천구 등촌로 160 (목동) 1층",
+    "old_coordinates": {
+      "latitude": 37.5439153,
+      "longitude": 126.862466
+    },
+    "new_coordinates": {
+      "latitude": 37.5439153,
+      "longitude": 126.862466
+    }
+  },
+  {
+    "name": "박창석동물병원",
+    "address": "서울특별시 마포구 도화길 42 (도화동) null",
+    "old_coordinates": {
+      "latitude": 37.5415108,
+      "longitude": 126.9503465
+    },
+    "new_coordinates": {
+      "latitude": 37.5415108,
+      "longitude": 126.9503465
+    }
+  },
+  {
+    "name": "이상윤동물병원",
+    "address": "서울특별시 용산구 이촌동 300-23",
+    "old_coordinates": {
+      "latitude": 37.5193535,
+      "longitude": 126.9750083
+    },
+    "new_coordinates": {
+      "latitude": 37.5193535,
+      "longitude": 126.9750083
+    }
+  },
+  {
+    "name": "펫토이동물병원",
+    "address": "서울특별시 용산구 한남동 653-26",
+    "old_coordinates": {
+      "latitude": 37.5335167,
+      "longitude": 127.0016999
+    },
+    "new_coordinates": {
+      "latitude": 37.5335167,
+      "longitude": 127.0016999
+    }
+  },
+  {
+    "name": "서초동물사랑센터",
+    "address": "서울특별시 서초구 양재천로19길 22 (양재동, 숨빌딩) 서초동물사랑센터",
+    "old_coordinates": {
+      "latitude": 37.47637,
+      "longitude": 127.038158
+    },
+    "new_coordinates": {
+      "latitude": 37.47637,
+      "longitude": 127.038158
+    }
+  },
+  {
+    "name": "디아크동물종합병원",
+    "address": "서울특별시 동작구 장승배기로27길 18 (노량진동) null",
+    "old_coordinates": {
+      "latitude": 37.5116916,
+      "longitude": 126.9390539
+    },
+    "new_coordinates": {
+      "latitude": 37.5116916,
+      "longitude": 126.9390539
+    }
+  },
+  {
+    "name": "노원반려동물문화센터",
+    "address": "서울특별시 노원구 수락산로 258 (상계동, 호성빌딩) 1층",
+    "old_coordinates": {
+      "latitude": 37.6713511,
+      "longitude": 127.0499792
+    },
+    "new_coordinates": {
+      "latitude": 37.6713511,
+      "longitude": 127.0499792
+    }
+  },
+  {
+    "name": "서울동물복지지원센터",
+    "address": "서울특별시 마포구 매봉산로 31 (상암동) 지하1층",
+    "old_coordinates": {
+      "latitude": 37.5757193,
+      "longitude": 126.8899949
+    },
+    "new_coordinates": {
+      "latitude": 37.5757193,
+      "longitude": 126.8899949
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-37 (남면) null",
+    "old_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    },
+    "new_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 상수리 410-1",
+    "old_coordinates": {
+      "latitude": 37.8701393,
+      "longitude": 126.9832604
+    },
+    "new_coordinates": {
+      "latitude": 37.8701393,
+      "longitude": 126.9832604
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-37  (사)한국동물구조관리협회",
+    "old_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    },
+    "new_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-48  null",
+    "old_coordinates": {
+      "latitude": 37.8707001,
+      "longitude": 126.9828774
+    },
+    "new_coordinates": {
+      "latitude": 37.8707001,
+      "longitude": 126.9828774
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-37 null",
+    "old_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    },
+    "new_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-37  null",
+    "old_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    },
+    "new_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    }
+  },
+  {
+    "name": "한국동물구조관리협회",
+    "address": "경기도 양주시 남면 감악산로 63-37 (남면) 한국동물구조관리협회",
+    "old_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    },
+    "new_coordinates": {
+      "latitude": 37.8700977,
+      "longitude": 126.9835457
+    }
+  },
+  {
+    "name": "GD동물병원",
+    "address": "서울특별시 강동구 상일로 13 (상일동) 1~2층 GD동물병원",
+    "old_coordinates": {
+      "latitude": 37.5482447,
+      "longitude": 127.1731218
+    },
+    "new_coordinates": {
+      "latitude": 37.5482447,
+      "longitude": 127.1731218
+    }
+  },
+  {
+    "name": "강동리본센터(reborn)",
+    "address": "서울특별시 강동구 양재대로81길 73 (성내동) null",
+    "old_coordinates": {
+      "latitude": 37.5238774,
+      "longitude": 127.1302815
+    },
+    "new_coordinates": {
+      "latitude": 37.5238774,
+      "longitude": 127.1302815
     }
   }
 ]

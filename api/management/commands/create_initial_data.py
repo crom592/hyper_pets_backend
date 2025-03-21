@@ -1,7 +1,7 @@
 # hyper_pets_backend/api/management/commands/create_initial_data.py
 from django.core.management.base import BaseCommand
 from api.models import Category, Shelter, Hospital
-from django.contrib.auth.models import User
+from api.models import CustomUser
 from django.utils import timezone
 
 class Command(BaseCommand):
@@ -9,8 +9,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         # Create superuser
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@example.com', 'admin')
+        if not CustomUser.objects.filter(username='admin').exists():
+            CustomUser.objects.create_superuser('admin', 'admin@example.com', 'admin')
             self.stdout.write(self.style.SUCCESS('Superuser created'))
 
         # Create categories
