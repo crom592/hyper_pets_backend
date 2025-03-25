@@ -225,6 +225,11 @@ class CustomUser(AbstractUser):
     bio = models.TextField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     longitude = models.FloatField(blank=True, null=True)
+    
+    # 소셜 로그인 관련 필드
+    social_provider = models.CharField(max_length=20, blank=True, null=True, help_text='소셜 로그인 제공자 (google, kakao, naver 등)')
+    social_provider_id = models.CharField(max_length=100, blank=True, null=True, help_text='소셜 로그인 제공자의 사용자 ID')
+    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
