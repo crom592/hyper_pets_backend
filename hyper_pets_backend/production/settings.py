@@ -61,7 +61,11 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
-    os.getenv('FRONTEND_URL', 'http://localhost:3000'),
+    os.getenv('FRONTEND_URL', 'http://localhost:3000','https://www.hyper-pets.com'),
+]
+# 또는 정규식 허용
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.hyper-pets\.com$",
 ]
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'True') == 'True'
 

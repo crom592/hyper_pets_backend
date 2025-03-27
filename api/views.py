@@ -247,3 +247,28 @@ class SalonViewSet(viewsets.ModelViewSet):
         
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+@api_view(['GET'])
+def reverse_geocode(request):
+    lat = request.GET.get('lat')
+    lng = request.GET.get('lng')
+
+    if not lat or not lng:
+        return JsonResponse({'error': 'Missing lat or lng'}, status=400)
+
+    NAVER_API_URL = 'https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc'
+    headers = {
+        'X-NCP-APIGW-API-KEY-ID': os.getenv('NAVER_CLIENT_ID'),
+        'X-NCP-APIGW-API-KEY': os.getenv('NAVER_CLIENT_SECRET'),
+    }
+    params = {
+        'coords': f'{lng},{lat}',
+        'output': 'json',
+        'orders': 'legalcode,admcode',
+    }
+
+    try:
+        res = requests.get(NAVER_API_URL, headers=headers, params=params)
+        return JsonResponse(res.json(), status=res.status_code)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

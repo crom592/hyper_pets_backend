@@ -3,8 +3,9 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import (
     CategoryViewSet, ShelterViewSet, HospitalViewSet, SalonViewSet,
-    PetViewSet, AdoptionStoryViewSet, EventViewSet, SupportViewSet
+    PetViewSet, AdoptionStoryViewSet, EventViewSet, SupportViewSet,
 )
+from .views import reverse_geocode
 from .auth_views import social_login
 
 # 펫워커 서비스 관련 뷰 임포트
@@ -101,4 +102,6 @@ urlpatterns = [
     path('admin/reports/location-stats/', LocationStatsView.as_view(), name='admin-location-stats'),
     path('admin/reports/pet-type-stats/', PetTypeStatsView.as_view(), name='admin-pet-type-stats'),
     path('admin/reports/summary-stats/', SummaryStatsView.as_view(), name='admin-summary-stats'),
+    
+    path('reverse-geocode/', reverse_geocode, name='reverse-geocode'),
 ]
