@@ -5,6 +5,26 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 import uuid
 
+class Region(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
+    level = models.PositiveSmallIntegerField()
+    
+    class Meta:
+        ordering = ['code']
+    
+    def __str__(self):
+        return self.name
+    
+    def get_full_name(self):
+        names = [self.name]
+        current = self
+        while current.parent:
+            current = current.parent
+            names.append(current.name)
+        return ' '.join(reversed(names))
+    
 class Category(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -181,15 +201,50 @@ class Event(models.Model):
         return self.title
 
 class Support(models.Model):
+    SUPPORT_TYPE_CHOICES = (
+        ('financial', '금전적 지원'),
+        ('medical', '의료 지원'),
+        ('adoption', '입양 지원'),
+        ('education', '교육 지원'),
+        ('other', '기타'),
+    )
+
+    STATUS_CHOICES = (
+        ('ongoing', '진행중'),
+        ('upcoming', '예정'),
+        ('ended', '종료'),
+    )
+
     title = models.CharField(max_length=200)
     description = models.TextField()
+    support_type = models.CharField(max_length=20, choices=SUPPORT_TYPE_CHOICES, default='other')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='ongoing')
     requirements = models.TextField()
+    target = models.TextField(help_text='지원 대상')
+    benefit = models.TextField(help_text='지원 내용')
+    how_to_apply = models.TextField(help_text='신청 방법')
+    start_date = models.DateField(null=True, blank=True)
     deadline = models.DateField(null=True, blank=True)
+    organization = models.CharField(max_length=200, help_text='주관 기관')
+    contact = models.CharField(max_length=100, blank=True, help_text='담당부서 연락처')
+    website_url = models.URLField(max_length=500, blank=True)
+    region = models.CharField(max_length=100, blank=True, help_text='지원 가능 지역')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = '지원사업'
+        verbose_name_plural = '지원사업들'
+
     def __str__(self):
         return self.title
+
+    @property
+    def is_active(self):
+        if not self.deadline:
+            return True
+        return self.deadline >= timezone.now().date()
 
 
 # 펫워커 서비스 모델
@@ -221,6 +276,7 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(max_length=10, choices=USER_TYPE_CHOICES, default='pet_owner')
     phone_number = models.CharField(max_length=15, blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True, related_name='residents')
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
     bio = models.TextField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
@@ -583,3 +639,83 @@ class Notification(models.Model):
     
     def __str__(self):
         return f"{self.user.username}의 알림: {self.title}"
+
+class LegalCode(models.Model):
+    code = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=100)
+    parent_code = models.CharField(max_length=10, null=True, blank=True)
+    rank = models.PositiveSmallIntegerField(null=True, blank=True)
+    created_date = models.DateField(null=True, blank=True)
+    abolished_date = models.DateField(null=True, blank=True)
+    last_updated_date = models.DateField(null=True, blank=True)
+    is_lowest_level = models.BooleanField(default=False)
+    resident_code = models.CharField(max_length=10, null=True, blank=True)
+    cadastral_code = models.CharField(max_length=10, null=True, blank=True)
+    
+    class Meta:
+        ordering = ['code']
+        
+    def __str__(self):
+        return self.name
+
+class WelloPolicy(models.Model):
+    policy_id = models.CharField(max_length=100, unique=True)
+    meta_policy_id_idx = models.CharField(max_length=100, blank=True)
+    agency_logo = models.URLField(max_length=200, blank=True)
+    policy_name = models.CharField(max_length=200, blank=True)
+    agency = models.CharField(max_length=100)
+    support_target = models.CharField(max_length=255, blank=True)
+    application_period = models.CharField(max_length=100, blank=True)
+    responsible_agency = models.CharField(max_length=100, blank=True)
+    support_benefit = models.CharField(max_length=100, blank=True)
+    like_count = models.IntegerField(default=0)
+    like_yn = models.BooleanField(default=False)
+    comment_count = models.IntegerField(default=0)
+    wishlist_yn = models.BooleanField(default=False)
+    expiration_date = models.CharField(max_length=50)
+    dday = models.CharField(max_length=20, blank=True)
+    regions = models.ManyToManyField(Region, related_name='policies')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'wello_policies'
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return self.policy_name
+
+class WelloPolicyDetail(models.Model):
+    policy = models.OneToOneField(WelloPolicy, on_delete=models.CASCADE, related_name='detail')
+    summary = models.JSONField(null=True)
+    website_url = models.URLField(max_length=500, null=True)
+    contact_number = models.CharField(max_length=50, null=True)
+    target = models.TextField()
+    content = models.TextField()
+    related_info = models.TextField(null=True)
+    how_to_apply = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        db_table = 'wello_policy_details'
+    
+    def __str__(self):
+        return f"{self.policy.policy_name} 상세정보"
+
+class News(models.Model):
+    title = models.CharField(max_length=500)
+    link = models.URLField(max_length=1000)
+    snippet = models.TextField()
+    published_date = models.DateTimeField()
+    source = models.CharField(max_length=200)
+    image_url = models.URLField(max_length=1000, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        verbose_name_plural = "News"
+        ordering = ['-published_date']
+        
+    def __str__(self):
+        return self.title
