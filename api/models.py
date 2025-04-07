@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 import uuid
+from django.utils import timezone
 
 class Region(models.Model):
     code = models.CharField(max_length=10, unique=True)
@@ -229,6 +230,19 @@ class Support(models.Model):
     contact = models.CharField(max_length=100, blank=True, help_text='담당부서 연락처')
     website_url = models.URLField(max_length=500, blank=True)
     region = models.CharField(max_length=100, blank=True, help_text='지원 가능 지역')
+    # WelloPolicy 연동을 위한 필드 추가
+    external_id = models.CharField(max_length=100, blank=True, null=True)
+    # 크롤링 기반 데이터 출처 (내부 식별용, 사용자 비노출)
+    source = models.CharField(
+        max_length=20, 
+        choices=[('manual', '직접입력'), ('crawling', '크롤링'), ('news', '뉴스')],
+        default='manual'
+    )
+    expires_at = models.DateField(null=True, blank=True)
+    regions = models.ManyToManyField(Region, related_name='supports', blank=True)
+    agency_logo = models.URLField(max_length=200, blank=True)
+    original_url = models.URLField(max_length=500, blank=True)
+    summary = models.JSONField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

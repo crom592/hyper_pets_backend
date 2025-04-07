@@ -5,8 +5,13 @@ from .models import (Category, Shelter, Hospital, Salon, Pet, AdoptionStory, Eve
                     CustomUser, PetOwnerProfile, PetSitterProfile, CertificationImage, PetType,
                     ServiceType, UserPet, PetSitterService, PetSitterAvailability, Booking,
                     Payment, WalkingTrack, TrackPoint, WalkingEvent, Review, Message,
-                    CommunityPost, PostImage, Comment, PostLike, Notification)
+                    CommunityPost, PostImage, Comment, PostLike, Notification,Region)
 
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = '__all__'
+        
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -65,10 +70,21 @@ class EventSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SupportSerializer(serializers.ModelSerializer):
+    regions = RegionSerializer(many=True, read_only=True)
+    status_display = serializers.CharField(source='get_status_display', read_only=True)
+    
     class Meta:
         model = Support
         fields = '__all__'
-
+        
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        # dday 계산 로직 추가
+        if instance.deadline:
+            from django.utils import timezone
+            today = timezone.now().date()
+            data['dday'] = (instance.deadline - today).days
+        return data
 
 class SalonSerializer(serializers.ModelSerializer):
     type = serializers.SerializerMethodField()

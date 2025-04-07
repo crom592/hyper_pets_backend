@@ -1,31 +1,17 @@
 # hyper_pets_backend/api/views.py
-import math
-from datetime import datetime, timedelta
-from django.db.models import Q, Avg, Count, F, Sum
-from django.shortcuts import get_object_or_404
-from django.contrib.auth import get_user_model
+import math,os
+import requests
 from django.utils import timezone
-from rest_framework import viewsets, status, permissions, filters
+from django.http import JsonResponse
+from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.decorators import action, api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
-from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import action, api_view
 
-from .models import (Category, Shelter, Hospital, Salon, Pet, AdoptionStory, Event, Support,
-                    CustomUser, PetOwnerProfile, PetSitterProfile, CertificationImage, PetType,
-                    ServiceType, UserPet, PetSitterService, PetSitterAvailability, Booking,
-                    Payment, WalkingTrack, TrackPoint, WalkingEvent, Review, Message,
-                    CommunityPost, PostImage, Comment, PostLike, Notification)
+from .models import (Category, Shelter, Hospital, Salon, Pet, AdoptionStory, Event, Support,)
 
 from .serializers import (
     CategorySerializer, ShelterSerializer, HospitalSerializer, SalonSerializer,
     PetSerializer, AdoptionStorySerializer, EventSerializer, SupportSerializer,
-    UserSerializer, PetOwnerProfileSerializer, PetSitterProfileSerializer,
-    CertificationImageSerializer, PetTypeSerializer, ServiceTypeSerializer,
-    UserPetSerializer, PetSitterServiceSerializer, PetSitterAvailabilitySerializer,
-    BookingSerializer, PaymentSerializer, WalkingTrackSerializer, TrackPointSerializer,
-    WalkingEventSerializer, ReviewSerializer, MessageSerializer, CommunityPostSerializer,
-    PostImageSerializer, CommentSerializer, PostLikeSerializer, NotificationSerializer
 )
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -178,21 +164,23 @@ class EventViewSet(viewsets.ModelViewSet):
         return queryset
 
 class SupportViewSet(viewsets.ModelViewSet):
-    queryset = Support.objects.all().order_by('-created_at')
+    queryset = Support.objects.all()
     serializer_class = SupportSerializer
-
+    
     def get_queryset(self):
-        queryset = Support.objects.all()
-        active = self.request.query_params.get('active', None)
+        queryset = super().get_queryset()
+        region = self.request.query_params.get('region', None)
+        status = self.request.query_params.get('status', None)
+        support_type = self.request.query_params.get('type', None)
         
-        if active:
-            from django.utils import timezone
-            queryset = queryset.filter(
-                Q(deadline__isnull=True) | Q(deadline__gte=timezone.now())
-            )
-        
+        if region:
+            queryset = queryset.filter(regions__code=region)
+        if status:
+            queryset = queryset.filter(status=status)
+        if support_type:
+            queryset = queryset.filter(support_type=support_type)
+            
         return queryset
-
 
 class SalonViewSet(viewsets.ModelViewSet):
     queryset = Salon.objects.all().order_by('name')
