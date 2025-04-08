@@ -247,7 +247,7 @@ class Support(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ['-expires_at']
         verbose_name = '지원사업'
         verbose_name_plural = '지원사업들'
 
