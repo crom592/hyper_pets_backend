@@ -117,7 +117,6 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True},
             'username': {'required': False, 'allow_blank': True, 'read_only': True},
-            'email': {'read_only': True},
             'first_name': {'required': False, 'allow_blank': True},
             'last_name': {'required': False, 'allow_blank': True},
         }
