@@ -1,4 +1,4 @@
-# hyper_pets_backend/api/pet_walker_views/pet_service_views.py
+# hyper_pets_backend/api/pet_worker_views/pet_service_views.py
 from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny

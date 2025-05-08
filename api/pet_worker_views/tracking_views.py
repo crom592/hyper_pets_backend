@@ -1,4 +1,4 @@
-# hyper_pets_backend/api/pet_walker_views/tracking_views.py
+# hyper_pets_backend/api/pet_worker_views/tracking_views.py
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.utils import timezone

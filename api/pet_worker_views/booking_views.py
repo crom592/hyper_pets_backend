@@ -1,4 +1,4 @@
-# hyper_pets_backend/api/pet_walker_views/booking_views.py
+# hyper_pets_backend/api/pet_worker_views/booking_views.py
 import uuid
 from datetime import datetime, timedelta
 from django.db.models import Q

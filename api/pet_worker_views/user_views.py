@@ -1,4 +1,4 @@
-# hyper_pets_backend/api/pet_walker_views/user_views.py
+# hyper_pets_backend/api/pet_worker_views/user_views.py
 import math
 from django.db.models import Q, Avg, Count, F, Sum
 from django.shortcuts import get_object_or_404

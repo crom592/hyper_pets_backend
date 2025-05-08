@@ -1,4 +1,4 @@
-# hyper_pets_backend/api/pet_walker_views/notification_views.py
+# hyper_pets_backend/api/pet_worker_views/notification_views.py
 from django.db.models import Q
 from django.utils import timezone
 from rest_framework import viewsets, status, filters
