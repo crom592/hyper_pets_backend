@@ -4,9 +4,14 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     CategoryViewSet, ShelterViewSet, HospitalViewSet, SalonViewSet,
     PetViewSet, AdoptionStoryViewSet, EventViewSet, SupportViewSet,
+    UserViewSet, # Added UserViewSet import
 )
 from .views import reverse_geocode
 from .auth_views import social_login
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 # 펫워커 서비스 관련 뷰 임포트
 from .pet_walker_views.user_views import (
@@ -44,6 +49,7 @@ main_router.register(r'pets', PetViewSet)
 main_router.register(r'adoption-stories', AdoptionStoryViewSet)
 main_router.register(r'events', EventViewSet)
 main_router.register(r'supports', SupportViewSet)
+main_router.register(r'users', UserViewSet) # Added UserViewSet registration
 
 # 펫워커 서비스 라우터
 pet_walker_router = DefaultRouter()
@@ -77,6 +83,8 @@ pet_walker_router.register(r'notifications', NotificationViewSet)
 urlpatterns = [
     # 기존 URL 패턴
     path('', include(main_router.urls)),
+    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('shelters/nearby/', ShelterViewSet.as_view({'get': 'nearby'}), name='shelter-nearby'),
     path('hospitals/nearby/', HospitalViewSet.as_view({'get': 'nearby'}), name='hospital-nearby'),
     path('salons/nearby/', SalonViewSet.as_view({'get': 'nearby'}), name='salon-nearby'),

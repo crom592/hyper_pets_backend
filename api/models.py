@@ -230,6 +230,9 @@ class Support(models.Model):
     contact = models.CharField(max_length=100, blank=True, help_text='담당부서 연락처')
     website_url = models.URLField(max_length=500, blank=True)
     region = models.CharField(max_length=100, blank=True, help_text='지원 가능 지역')
+    # 위치 정보 추가
+    latitude = models.FloatField(null=True, blank=True, help_text='위도')
+    longitude = models.FloatField(null=True, blank=True, help_text='경도')
     # WelloPolicy 연동을 위한 필드 추가
     external_id = models.CharField(max_length=100, blank=True, null=True)
     # 크롤링 기반 데이터 출처 (내부 식별용, 사용자 비노출)

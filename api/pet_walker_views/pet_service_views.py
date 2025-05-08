@@ -47,7 +47,7 @@ class UserPetViewSet(viewsets.ModelViewSet):
     serializer_class = UserPetSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    filterset_fields = ['pet_type', 'size', 'age']
+    filterset_fields = ['pet_type', 'age']
     search_fields = ['name']
     
     def get_queryset(self):

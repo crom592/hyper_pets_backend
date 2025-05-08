@@ -103,13 +103,23 @@ class SalonSerializer(serializers.ModelSerializer):
 
 # 펫워커 서비스 시리얼라이저
 class UserSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    marketing_agree = serializers.BooleanField(write_only=True, required=False)
+
     class Meta:
         model = CustomUser
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'user_type', 'phone_number', 
-                 'address', 'profile_image', 'bio', 'latitude', 'longitude', 'date_joined']
+        fields = [
+            'id', 'username', 'email', 'first_name', 'last_name', 'user_type', 
+            'phone_number', 'address', 'profile_image', 'bio', 'latitude', 'longitude', 
+            'date_joined', 'password', 'name', 'marketing_agree'
+        ]
         read_only_fields = ['date_joined']
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'username': {'required': False, 'allow_blank': True, 'read_only': True},
+            'email': {'read_only': True},
+            'first_name': {'required': False, 'allow_blank': True},
+            'last_name': {'required': False, 'allow_blank': True},
         }
 
 
