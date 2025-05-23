@@ -92,6 +92,7 @@ urlpatterns = [
     path('shelters/nearby/', ShelterViewSet.as_view({'get': 'nearby'}), name='shelter-nearby'),
     path('hospitals/nearby/', HospitalViewSet.as_view({'get': 'nearby'}), name='hospital-nearby'),
     path('salons/nearby/', SalonViewSet.as_view({'get': 'nearby'}), name='salon-nearby'),
+    path('supports/nearby/', SupportViewSet.as_view({'get': 'nearby'}), name='support-nearby'),
     
     # 인증 관련 URL 패턴
     path('auth/social-login/', social_login, name='social-login'),

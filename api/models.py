@@ -11,6 +11,8 @@ class Region(models.Model):
     name = models.CharField(max_length=100)
     parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='children')
     level = models.PositiveSmallIntegerField()
+    latitude = models.FloatField(null=True, blank=True, help_text='위도')
+    longitude = models.FloatField(null=True, blank=True, help_text='경도')
     
     class Meta:
         ordering = ['code']

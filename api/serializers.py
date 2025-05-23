@@ -10,7 +10,7 @@ from .models import (Category, Shelter, Hospital, Salon, Pet, AdoptionStory, Eve
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Region
-        fields = '__all__'
+        fields = ['id', 'code', 'name', 'parent', 'level', 'latitude', 'longitude']
         
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -72,10 +72,40 @@ class EventSerializer(serializers.ModelSerializer):
 class SupportSerializer(serializers.ModelSerializer):
     regions = RegionSerializer(many=True, read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
-    
+    location = serializers.SerializerMethodField()
+    support_type_display = serializers.CharField(source='get_support_type_display', read_only=True)
+
     class Meta:
         model = Support
         fields = '__all__'
+        
+    def get_location(self, obj):
+        """지도에 표시하기 위한 위치 정보를 반환합니다."""
+        # 1. 연결된 regions 중 위도/경도 정보가 있는 첫 번째 지역 사용
+        if obj.regions.filter(latitude__isnull=False).exists():
+            region = obj.regions.filter(latitude__isnull=False).first()
+            return {
+                'latitude': region.latitude,
+                'longitude': region.longitude,
+                'region_name': region.name,
+                'region_code': region.code
+            }
+        # 2. 지원 정책 자체에 저장된 위도/경도 정보 사용
+        elif obj.latitude is not None and obj.longitude is not None:
+            return {
+                'latitude': obj.latitude,
+                'longitude': obj.longitude,
+                'region_name': obj.region if obj.region else '서울특별시',
+                'region_code': ''
+            }
+        # 3. 위치 정보가 없는 경우 서울시청 좌표 반환 (기본값)
+        else:
+            return {
+                'latitude': 37.5665, 
+                'longitude': 126.9780,
+                'region_name': '서울특별시',
+                'region_code': ''
+            }
         
     def to_representation(self, instance):
         data = super().to_representation(instance)
